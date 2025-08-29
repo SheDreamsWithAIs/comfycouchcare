@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="55" fill="#5c7cfa" stroke="#f783ac" stroke-width="5"/>
+
+  <!-- Couch base -->
+  <rect x="30" y="65" width="60" height="25" rx="5" ry="5" fill="white"/>
+
+  <!-- Couch backrest (single piece) -->
+  <rect x="35" y="45" width="50" height="25" rx="5" ry="5" fill="white"/>
+
+  <!-- Center divider for cushions -->
+  <line x1="60" y1="45" x2="60" y2="90" stroke="#5c7cfa" stroke-width="2"/>
+
+  <!-- Armrests -->
+  <rect x="20" y="55" width="15" height="35" rx="5" ry="5" fill="white"/>
+  <rect x="85" y="55" width="15" height="35" rx="5" ry="5" fill="white"/>
+
+  <!-- Inset C-shapes (wider, bleeding into base, left/right extended) -->
+  <rect x="42" y="49" width="18" height="37" rx="10" ry="5" fill="#5c7cfa"/>
+  <rect x="60" y="49" width="18" height="37" rx="10" ry="5" fill="#5c7cfa"/>
+
+  <!-- Heart above couch (lowered back for balance) -->
+  <path d="M60 25
+           C55 15, 40 20, 40 30
+           C40 40, 60 52, 60 52
+           C60 52, 80 40, 80 30
+           C80 20, 65 15, 60 25 Z"
+        fill="none" stroke="white" stroke-width="3"/>
+</svg>

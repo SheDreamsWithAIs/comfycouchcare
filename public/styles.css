@@ -1,0 +1,138 @@
+:root {
+  --brand: #5c7cfa;       /* main brand color */
+  --brand-accent: #f783ac; /* accent (buttons, highlights) */
+  --bg: #f8f9fa;          /* background */
+  --text: #212529;        /* main text color */
+  --muted: #868e96;       /* muted/secondary text */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--brand);
+  color: white;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+header .logo {
+  max-width: 80px;
+  margin-bottom: 0.5rem;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  color: white;
+  margin: 0 0.75rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+.slogan {
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Card styling (patient lists, info boxes) */
+.card {
+  background: white;
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+}
+
+.card:hover {
+  border-color: var(--brand);
+  box-shadow: 0 2px 6px rgba(92,124,250,0.2);
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.card-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Search form */
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-bar input,
+.search-bar select,
+.search-bar button {
+  padding: 0.5rem;
+  border: 1px solid var(--muted);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  background: var(--brand);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: var(--brand-accent);
+}
+
+/* Key-value pairs in patient detail */
+.kv .k {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+.kv .v {
+  color: var(--text);
+}
+.kv div {
+  margin: 0.25rem 0;
+}
+
+
+footer {
+  text-align: center;
+  background: var(--brand);
+  color: white;
+  padding: 1rem;
+  margin-top: auto;
+}
