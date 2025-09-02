@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - CareUnify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nurse-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .sign-out-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .sign-out-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .page-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .navigation {
+            background: white;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.75rem;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .nav-btn {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 0.75rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .nav-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .nav-btn:hover:not(.active) {
+            background: #e9ecef;
+        }
+        
+        .search-bar {
+            background: white;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            padding: 0.5rem;
+        }
+        
+        .search-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        
+        .clear-search-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        
+        .search-results-header {
+            margin: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .search-results-info {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .search-query {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .results-count {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .search-filters {
+            margin: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #5a6c7d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .search-filter-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-filter-btn {
+            background: #f8f9fa;
+            border: 2px solid #e0e6ed;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .search-filter-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .pagination {
+            background: white;
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .pagination-info {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .pagination-btn {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background: #e9ecef;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .pagination-current {
+            font-weight: 500;
+            color: #2c3e50;
+            margin: 0 0.5rem;
+        }
+            background: white;
+            margin: 1rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            color: #7f8c8d;
+        }
+        
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .no-results-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .no-results-suggestions {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .patient-card {
+            background: white;
+            margin: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .patient-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .patient-header:hover {
+            background: #e9ecef;
+        }
+        
+        .patient-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .patient-basic-info {
+            flex: 1;
+        }
+        
+        .patient-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+        
+        .patient-quick-info {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .expand-icon {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            transition: transform 0.2s;
+            margin-left: 1rem;
+        }
+        
+        .patient-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+        
+        .start-visit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            min-height: 44px;
+        }
+        
+        .status-badge {
+            background: #27ae60;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .patient-details {
+            padding: 1rem;
+            display: none;
+        }
+        
+        .patient-card.expanded .patient-details {
+            display: block;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #5a6c7d;
+            flex: 1;
+        }
+        
+        .detail-value {
+            flex: 2;
+            text-align: right;
+        }
+        
+        .medication-list {
+            background: #f8f9fa;
+            margin: 0.5rem 0;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .medication-item {
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+        
+        .allergy-alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .action-buttons {
+            padding: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            background: #f8f9fa;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Touch-friendly sizing for tablets */
+        @media (max-width: 1024px) {
+            .btn, .search-btn, .clear-search-btn, .search-filter-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .search-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .search-results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .detail-value {
+                text-align: left;
+            }
+        }
+    </style>
+    <script>
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+        
+        function clearSearch() {
+            // Clear search and return to assigned patients view
+            document.querySelector('.search-input').value = '';
+            alert('Returning to My Patients list...');
+        }
+        
+        function returnToMyPatients() {
+            // Navigate back to the main patient list (assigned patients only)
+            alert('Returning to My Patients list...');
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="app-title">CareUnify</div>
+            <div class="header-right">
+                <div class="nurse-info">Sarah Martinez, RN • 3:42 PM</div>
+                <button class="sign-out-btn">Sign Out</button>
+            </div>
+        </div>
+        <div class="page-title">Patient Search Results</div>
+    </div>
+    
+    <div class="navigation">
+        <div class="nav-grid">
+            <button class="nav-btn">Dashboard</button>
+            <button class="nav-btn active">Patient Info</button>
+            <button class="nav-btn">Forms & Docs</button>
+            <button class="nav-btn">Charting</button>
+            <button class="nav-btn">Tasks & Schedule</button>
+            <button class="nav-btn">Time & Travel</button>
+            <button class="nav-btn">Supply Requests</button>
+            <button class="nav-btn">Settings</button>
+        </div>
+    </div>
+    
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search by name, ID, or condition..." value="Johnson">
+        <button class="search-btn">Search</button>
+        <button class="clear-search-btn" onclick="clearSearch()">Clear</button>
+    </div>
+    
+    <div class="search-results-header">
+        <div>
+            <div class="search-results-info">
+                Search results for: <span class="search-query">"Johnson"</span>
+            </div>
+            <div class="results-count">27 patients found (searching all patients) • Showing 1-10</div>
+        </div>
+        <button class="btn btn-secondary" onclick="returnToMyPatients()">← Back to My Patients</button>
+    </div>
+    
+    <div class="search-filters">
+        <div class="filter-label">Refine search results:</div>
+        <div class="search-filter-options">
+            <button class="search-filter-btn active">All Results</button>
+            <button class="search-filter-btn">My Patients</button>
+            <button class="search-filter-btn">Active</button>
+            <button class="search-filter-btn">Infusion</button>
+            <button class="search-filter-btn">Blood Draw</button>
+            <button class="search-filter-btn">Wound Care</button>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Robert Johnson</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-0923</span>
+                        <span>Blood Draw</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">July 8, 1942</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Blood Draw</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Type 2 Diabetes</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Metformin 1000mg twice daily</div>
+                <div class="medication-item">• Lisinopril 10mg daily</div>
+                <div class="medication-item">• Atorvastatin 20mg daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Emily Johnson-Smith</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1156</span>
+                        <span>Wound Care</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">September 22, 1976</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Post-Surgical Wound Care</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Post-op Knee Replacement</span>
+            </div>
+            
+            <div class="allergy-alert">
+                <strong>⚠️ Allergies:</strong> Latex, Iodine
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Hydrocodone 5mg as needed</div>
+                <div class="medication-item">• Cephalexin 500mg 4x daily</div>
+                <div class="medication-item">• Warfarin 2mg daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">David Johnson</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1289</span>
+                        <span>Physical Therapy</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">January 15, 1968</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Post-Stroke Physical Therapy</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Stroke Recovery</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Clopidogrel 75mg daily</div>
+                <div class="medication-item">• Atorvastatin 40mg daily</div>
+                <div class="medication-item">• Lisinopril 20mg daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Maria Johnson-Garcia</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1344</span>
+                        <span>Medication Management</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">May 3, 1955</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Complex Medication Management</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Multiple Chronic Conditions</span>
+            </div>
+            
+            <div class="allergy-alert">
+                <strong>⚠️ Allergies:</strong> Shellfish, NSAIDs
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Metoprolol 50mg twice daily</div>
+                <div class="medication-item">• Furosemide 40mg daily</div>
+                <div class="medication-item">• Warfarin 3mg daily</div>
+                <div class="medication-item">• Insulin Lantus 24 units daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">William Johnson Jr.</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1456</span>
+                        <span>Wound Care</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">August 12, 1950</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Diabetic Ulcer Care</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Diabetic Foot Ulcer</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Metformin 1000mg twice daily</div>
+                <div class="medication-item">• Insulin NPH 30 units twice daily</div>
+                <div class="medication-item">• Ciprofloxacin 500mg twice daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Jennifer Johnson-Brown</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1578</span>
+                        <span>Infusion</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">November 28, 1972</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Chemotherapy Infusion</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Breast Cancer</span>
+            </div>
+            
+            <div class="allergy-alert">
+                <strong>⚠️ Allergies:</strong> Ondansetron
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Doxorubicin infusion q3weeks</div>
+                <div class="medication-item">• Cyclophosphamide infusion q3weeks</div>
+                <div class="medication-item">• Dexamethasone 8mg pre-chemo</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Michael Johnson-Davis</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1689</span>
+                        <span>Blood Draw</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">April 7, 1963</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">INR Monitoring</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Atrial Fibrillation</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Warfarin 5mg daily</div>
+                <div class="medication-item">• Metoprolol 100mg twice daily</div>
+                <div class="medication-item">• Digoxin 0.25mg daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Patricia Johnson-Wilson</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1734</span>
+                        <span>Post-Op Care</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">December 14, 1945</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Post-Hip Replacement Care</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Post-op Hip Replacement</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Oxycodone 5mg q6h PRN</div>
+                <div class="medication-item">• Enoxaparin 40mg daily</div>
+                <div class="medication-item">• Docusate 100mg twice daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">James Johnson-Miller</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1845</span>
+                        <span>Respiratory Care</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">June 23, 1938</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">COPD Management</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">Chronic Obstructive Pulmonary Disease</span>
+            </div>
+            
+            <div class="allergy-alert">
+                <strong>⚠️ Allergies:</strong> Aspirin
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Albuterol inhaler q4h PRN</div>
+                <div class="medication-item">• Tiotropium 18mcg daily</div>
+                <div class="medication-item">• Prednisone 20mg daily</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="patient-card" onclick="toggleCard(this)">
+        <div class="patient-header">
+            <div class="patient-summary">
+                <div class="patient-basic-info">
+                    <div class="patient-name">Susan Johnson-Taylor</div>
+                    <div class="patient-quick-info">
+                        <span>ID: HC-2024-1923</span>
+                        <span>Palliative Care</span>
+                        <span class="status-badge">Active</span>
+                    </div>
+                </div>
+                <button class="start-visit-btn" onclick="event.stopPropagation()">Start Visit</button>
+                <div class="expand-icon">▼</div>
+            </div>
+        </div>
+        
+        <div class="patient-details">
+            <div class="detail-row">
+                <span class="detail-label">Date of Birth:</span>
+                <span class="detail-value">February 18, 1952</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Care Type:</span>
+                <span class="detail-value">Comfort Care</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Primary Diagnosis:</span>
+                <span class="detail-value">End-stage Pancreatic Cancer</span>
+            </div>
+            
+            <div class="medication-list">
+                <strong>Current Medications:</strong>
+                <div class="medication-item">• Morphine 15mg q4h PRN</div>
+                <div class="medication-item">• Lorazepam 1mg q6h PRN</div>
+                <div class="medication-item">• Scopolamine patch q72h</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">View Chart</button>
+                <button class="btn btn-secondary">Patient Info</button>
+                <button class="btn btn-secondary">Care Plan</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pagination">
+        <div class="pagination-info">
+            Showing 1-10 of 27 patients
+        </div>
+        <div class="pagination-controls">
+            <button class="pagination-btn" disabled>← Previous</button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <span class="pagination-current">Page 1 of 3</span>
+            <button class="pagination-btn">Next →</button>
+        </div>
+    </div>
+</body>
+</html>

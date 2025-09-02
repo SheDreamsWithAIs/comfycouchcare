@@ -135,8 +135,9 @@ function renderPatientCard(p) {
         ${medsList}
       </div>
       <div style="display:flex;gap:.5rem;margin-top:1rem">
-        <button class="btn btn-primary" style="flex:1">View Chart</button>
-        <button class="btn" style="flex:1">Care Plan</button>
+      <button class="btn btn-primary" style="flex:1">Patient Details</button>
+      <button class="btn" style="flex:1">View Chart</button>
+      <button class="btn" style="flex:1">Care Plan</button>
       </div>
     </div>
   </section>`;

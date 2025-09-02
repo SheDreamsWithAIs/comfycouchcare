@@ -1,150 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Patient Information • ComfyCouchCare</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <style>
-    /* small component rules that match our mock */
-    .header--nurse{background:linear-gradient(135deg,var(--brand) 0%,#6ea8fe 100%);color:#fff;box-shadow:0 2px 4px rgb(0 0 0 / 10%);padding:1rem}
-    .header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
-    .app-title{font-size:1.5rem;font-weight:700}
-    .header-right{display:flex;gap:1rem;align-items:center}
-    .sign-out-btn{background:rgb(255 255 255 / 18%);color:#fff;border:1px solid rgb(255 255 255 / 30%);padding:.5rem 1rem;border-radius:6px}
-    .page-title{font-size:1.1rem;font-weight:600}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Patient Information • ComfyCouchCare</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* small component rules that match our mock */
+        .header--nurse {
+            background: linear-gradient(135deg, var(--brand) 0%, #6ea8fe 100%);
+            color: #fff;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+            padding: 1rem
+        }
 
-    .navigation{background:#fff;margin:1rem;border-radius:10px;box-shadow:0 2px 6px rgb(0 0 0 / 10%);padding:.75rem}
-    .nav-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem}
-    .nav-btn{display:block;text-align:center;background:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;padding:.75rem .5rem;color:#495057;font-weight:600;text-decoration:none}
-    .nav-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .nav-btn:active{transform:translateY(1px)}
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .5rem
+        }
 
-    .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem}
-    .search{flex:1;display:flex;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgb(0 0 0 / 10%);padding:.5rem}
-    .search input{flex:1;border:0;outline:0;font-size:1rem;padding:.5rem}
-    .btn{border:0;border-radius:8px;padding:.65rem 1rem;font-weight:600}
-    .btn-primary{background:var(--brand);color:#fff}
-    .chips{display:flex;gap:.5rem;flex-wrap:wrap}
-    .chip{background:#fff;border:2px solid #e0e6ed;border-radius:999px;padding:.5rem 1rem;font-weight:600}
-    .chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700
+        }
 
-    .patient-card{background:#fff;margin:1rem;border-radius:12px;box-shadow:0 2px 8px rgb(0 0 0 / 10%);overflow:hidden}
-    .patient-header{background:#f8f9fa;padding:1rem;border-bottom:1px solid #e9ecef;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-    .patient-name{font-size:1.25rem;font-weight:700}
-    .quick{display:flex;gap:1rem;flex-wrap:wrap;color:#7f8c8d}
-    .badge{background:#27ae60;color:#fff;border-radius:14px;padding:.2rem .6rem;font-size:.8rem}
-    .start{background:#27ae60;color:#fff;min-height:44px;border-radius:8px}
-    .details{display:none;padding:1rem}
-    .patient-card.expanded .details{display:block}
-    .row{display:flex;justify-content:space-between;border-bottom:1px solid #f1f3f4;padding:.5rem 0}
-    .row:last-child{border-bottom:0}
-    @media (max-width:768px){.row{flex-direction:column;gap:.25rem}}
-  </style>
+        .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center
+        }
+
+        .sign-out-btn {
+            background: rgb(255 255 255 / 18%);
+            color: #fff;
+            border: 1px solid rgb(255 255 255 / 30%);
+            padding: .5rem 1rem;
+            border-radius: 6px
+        }
+
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 600
+        }
+
+        .navigation {
+            background: #fff;
+            margin: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+            padding: .75rem
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: .5rem
+        }
+
+        .nav-btn {
+            display: block;
+            text-align: center;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: .75rem .5rem;
+            color: #495057;
+            font-weight: 600;
+            text-decoration: none
+        }
+
+        .nav-btn.active {
+            background: var(--brand);
+            color: #fff;
+            border-color: var(--brand)
+        }
+
+        .nav-btn:active {
+            transform: translateY(1px)
+        }
+
+        .toolbar {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin: 1rem
+        }
+
+        .search {
+            flex: 1;
+            display: flex;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+            padding: .5rem
+        }
+
+        .search input {
+            flex: 1;
+            border: 0;
+            outline: 0;
+            font-size: 1rem;
+            padding: .5rem
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: .65rem 1rem;
+            font-weight: 600
+        }
+
+        .btn-primary {
+            background: var(--brand);
+            color: #fff
+        }
+
+        .chips {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .chip {
+            background: #fff;
+            border: 2px solid #e0e6ed;
+            border-radius: 999px;
+            padding: .5rem 1rem;
+            font-weight: 600
+        }
+
+        .chip.active {
+            background: var(--brand);
+            color: #fff;
+            border-color: var(--brand)
+        }
+
+        .card-list {
+            margin: 0 1rem 1rem
+        }
+
+        .patient-card {
+            background: #fff;
+            margin: 1rem 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+            overflow: hidden
+        }
+
+        .patient-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .patient-name {
+            font-size: 1.25rem;
+            font-weight: 700
+        }
+
+        .quick {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: #7f8c8d
+        }
+
+        .badge {
+            background: #27ae60;
+            color: #fff;
+            border-radius: 14px;
+            padding: .2rem .6rem;
+            font-size: .8rem
+        }
+
+        .start {
+            background: #27ae60;
+            color: #fff;
+            min-height: 44px;
+            border-radius: 8px
+        }
+
+        .details {
+            display: none;
+            padding: 1rem
+        }
+
+        .patient-card.expanded .details {
+            display: block
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #f1f3f4;
+            padding: .5rem 0
+        }
+
+        .row:last-child {
+            border-bottom: 0
+        }
+
+        @media (max-width:768px) {
+            .row {
+                flex-direction: column;
+                gap: .25rem
+            }
+        }
+
+        .chev {
+            width: 18px;
+            height: 18px;
+            transition: transform 160ms ease;
+            margin-left: .75rem;
+            flex-shrink: 0;
+        }
+
+        .patient-card.expanded .chev {
+            transform: rotate(90deg);
+            /* ▸ becomes ▶ */
+        }
+
+        .patient-header-right {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+    </style>
 </head>
+
 <body>
-  <!-- nurse header partial -->
-  <div id="hdr"></div>
+    <!-- nurse header partial -->
+    <div id="hdr"></div>
 
-  <!-- nurse nav partial -->
-  <div id="nav"></div>
+    <!-- nurse nav partial -->
+    <div id="nav"></div>
 
-  <!-- search + filters -->
-  <div class="toolbar">
-    <div class="search">
-      <input id="q" type="search" placeholder="Search by name, ID, or condition…"/>
-      <button class="btn btn-primary" id="doSearch">Search</button>
+    <!-- search + filters -->
+    <div class="toolbar">
+        <div class="search">
+            <input id="q" type="search" placeholder="Search by name, ID, or condition…" />
+            <button class="btn btn-primary" id="doSearch">Search</button>
+        </div>
+        <div class="chips">
+            <button class="chip active">My Patients</button>
+            <button class="chip">All Patients</button>
+            <button class="chip">Infusion</button>
+            <button class="chip">Wound Care</button>
+            <button class="chip">Post-Op</button>
+        </div>
     </div>
-    <div class="chips">
-      <button class="chip active">My Patients</button>
-      <button class="chip">All Patients</button>
-      <button class="chip">Infusion</button>
-      <button class="chip">Wound Care</button>
-      <button class="chip">Post-Op</button>
-    </div>
-  </div>
 
-  <!-- sample patient cards (static for now; will bind to API later) -->
-  <section class="patient-card" onclick="this.classList.toggle('expanded')">
-    <div class="patient-header">
-      <div>
-        <div class="patient-name">Margaret Chen</div>
-        <div class="quick"><span>ID: HC-2024-0847</span><span>Weekly Infusion</span><span class="badge">Active</span></div>
-      </div>
-      <button class="btn start" onclick="event.stopPropagation()">Start Visit</button>
-    </div>
-    <div class="details">
-      <div class="row"><strong>Date of Birth:</strong><span>Mar 15, 1958</span></div>
-      <div class="row"><strong>Care Type:</strong><span>Weekly Infusion</span></div>
-      <div class="row"><strong>Next Visit:</strong><span>Today, 9:30 AM</span></div>
-      <div class="row"><strong>Primary Dx:</strong><span>Rheumatoid Arthritis</span></div>
-      <div class="row"><strong>Allergies:</strong><span>Penicillin, Sulfa drugs</span></div>
-      <div style="margin-top:.75rem"><strong>Current Medications</strong>
-        <ul style="margin:.5rem 0 0 1rem">
-          <li>Methotrexate 15mg weekly</li>
-          <li>Folic Acid 5mg daily</li>
-          <li>Prednisone 5mg daily</li>
-        </ul>
-      </div>
-      <div style="display:flex;gap:.5rem;margin-top:1rem">
-        <button class="btn btn-primary">View Chart</button>
-        <button class="btn">Care Plan</button>
-      </div>
-    </div>
-  </section>
+    <!-- live list mounts here -->
+    <div id="patientList" class="card-list"></div>
 
-  <section class="patient-card" onclick="this.classList.toggle('expanded')">
-    <div class="patient-header">
-      <div>
-        <div class="patient-name">Robert Johnson</div>
-        <div class="quick"><span>ID: HC-2024-0923</span><span>Blood Draw</span><span class="badge">Active</span></div>
-      </div>
-      <button class="btn start" onclick="event.stopPropagation()">Start Visit</button>
-    </div>
-    <div class="details">
-      <div class="row"><strong>Date of Birth:</strong><span>Jul 8, 1942</span></div>
-      <div class="row"><strong>Care Type:</strong><span>Blood Draw</span></div>
-      <div class="row"><strong>Next Visit:</strong><span>Tomorrow, 7:00 AM</span></div>
-      <div class="row"><strong>Primary Dx:</strong><span>Type 2 Diabetes</span></div>
-      <div style="margin-top:.75rem"><strong>Current Medications</strong>
-        <ul style="margin:.5rem 0 0 1rem">
-          <li>Metformin 1000mg twice daily</li>
-          <li>Lisinopril 10mg daily</li>
-          <li>Atorvastatin 20mg daily</li>
-        </ul>
-      </div>
-      <div style="display:flex;gap:.5rem;margin-top:1rem">
-        <button class="btn btn-primary">View Chart</button>
-        <button class="btn">Care Plan</button>
-      </div>
-    </div>
-  </section>
+    <!-- app footer partial (optional) -->
+    <div id="ftr"></div>
 
-  <!-- app footer partial (optional) -->
-  <div id="ftr"></div>
-
-  <script src="js/partials.js"></script>
-  <script src="js/patient-info-landing.js"></script>
-  <script>
-    inject("hdr", "partials/nurse-header.html").then(() => {
-    const el = document.getElementById("nurseInfo");
-    if (el) {
-      const now = new Date();
-      const t = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-      el.textContent = `Sarah Martinez, RN • ${t}`;
-    }
-  });
-
-  inject("nav", "partials/nurse-nav.html");
-  inject("ftr", "partials/app-footer.html");
-
-    // simple search placeholder (manual testing UX)
-    document.getElementById('doSearch').addEventListener('click', ()=>{
-      const q = document.getElementById('q').value.trim();
-      if (!q) return;
-      alert('Search not wired yet. Query: ' + q);
-    });
-  </script>
-
+    <script src="js/partials.js"></script>
+    <script src="js/patient-info-landing.js"></script>
 </body>
+
 </html>

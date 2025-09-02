@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information - Emily Johnson-Smith - CareUnify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nurse-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .sign-out-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .sign-out-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .page-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .navigation {
+            background: white;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.75rem;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .nav-btn {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 0.75rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .nav-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .nav-btn:hover:not(.active) {
+            background: #e9ecef;
+        }
+        
+        .breadcrumb {
+            background: white;
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .quick-nav {
+            margin: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .patient-header-card {
+            background: white;
+            margin: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .patient-header-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .patient-summary {
+            flex: 1;
+        }
+        
+        .patient-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .patient-basic-details {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+        }
+        
+        .status-badge {
+            background: #27ae60;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .patient-header-actions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e9ecef;
+            background: white;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .info-sections {
+            margin: 1rem;
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .info-card-header {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .info-card-content {
+            padding: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            color: #5a6c7d;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+        
+        .info-value.highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 0.5rem;
+            border-radius: 4px;
+            color: #856404;
+            font-weight: 500;
+        }
+        
+        .action-bar {
+            background: white;
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .emergency-alert {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .emergency-alert-title {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .emergency-contact-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .emergency-contact-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+        
+        .emergency-contact-relation {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Touch-friendly sizing for tablets */
+        @media (max-width: 1024px) {
+            .btn, .nav-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .patient-header-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .patient-basic-details {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="app-title">CareUnify</div>
+            <div class="header-right">
+                <div class="nurse-info">Sarah Martinez, RN • 3:42 PM</div>
+                <button class="sign-out-btn">Sign Out</button>
+            </div>
+        </div>
+        <div class="page-title">Patient Information Detail</div>
+    </div>
+    
+    <div class="navigation">
+        <div class="nav-grid">
+            <button class="nav-btn">Dashboard</button>
+            <button class="nav-btn active">Patient Info</button>
+            <button class="nav-btn">Forms & Docs</button>
+            <button class="nav-btn">Charting</button>
+            <button class="nav-btn">Tasks & Schedule</button>
+            <button class="nav-btn">Time & Travel</button>
+            <button class="nav-btn">Supply Requests</button>
+            <button class="nav-btn">Settings</button>
+        </div>
+    </div>
+    
+    <div class="breadcrumb">
+        <a href="#">Patient Information</a> > <a href="#">Search Results</a> > Emily Johnson-Smith
+    </div>
+    
+    <div class="quick-nav">
+        <button class="btn btn-secondary" onclick="goBack()">← Back to Search Results</button>
+    </div>
+    
+    <div class="patient-header-card">
+        <div class="patient-header-info">
+            <div class="patient-summary">
+                <div class="patient-name">
+                    Emily Johnson-Smith
+                    <span class="status-badge">Active Patient</span>
+                </div>
+                <div class="patient-basic-details">
+                    <span>ID: HC-2024-1156 • DOB: September 22, 1976 (Age 47)</span>
+                    <span>Post-Surgical Wound Care</span>
+                </div>
+            </div>
+        </div>
+        <div class="patient-header-actions">
+            <button class="btn btn-primary">Edit Information</button>
+            <button class="btn btn-success">Start Visit</button>
+        </div>
+    </div>
+    
+    <div class="info-sections">
+        <div class="info-card">
+            <div class="info-card-header">Contact Information</div>
+            <div class="info-card-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Primary Phone</div>
+                        <div class="info-value">(555) 342-7891</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Mobile Phone</div>
+                        <div class="info-value">(555) 342-7892</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email Address</div>
+                        <div class="info-value">emily.johnson.smith@email.com</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Preferred Contact Method</div>
+                        <div class="info-value">Mobile Phone</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-card-header">Address Information</div>
+            <div class="info-card-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Home Address</div>
+                        <div class="info-value">1247 Oak Street<br>Springfield, IL 62704</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Mailing Address</div>
+                        <div class="info-value">Same as Home Address</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Special Instructions</div>
+                        <div class="info-value highlight">Apartment is upstairs - patient has mobility limitations post-surgery</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-card-header">Demographics</div>
+            <div class="info-card-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Date of Birth</div>
+                        <div class="info-value">September 22, 1976</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Age</div>
+                        <div class="info-value">47 years old</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Gender</div>
+                        <div class="info-value">Female</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Marital Status</div>
+                        <div class="info-value">Married</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Primary Language</div>
+                        <div class="info-value">English</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Social Security Number</div>
+                        <div class="info-value">***-**-4789</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-card-header">Insurance Information</div>
+            <div class="info-card-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Primary Insurance</div>
+                        <div class="info-value">Blue Cross Blue Shield Illinois</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Policy Number</div>
+                        <div class="info-value">BCBS-IL-789456123</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Group Number</div>
+                        <div class="info-value">GRP-45789</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Policy Holder</div>
+                        <div class="info-value">Self</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">January 1, 2024</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Secondary Insurance</div>
+                        <div class="info-value">None</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-card-header">Emergency Contacts</div>
+            <div class="info-card-content">
+                <div class="emergency-alert">
+                    <div class="emergency-alert-title">⚠️ Important: Patient lives alone during recovery</div>
+                    Contact emergency contacts if patient doesn't answer door or seems disoriented
+                </div>
+                
+                <div class="emergency-contact-item">
+                    <div class="emergency-contact-name">David Johnson-Smith</div>
+                    <div class="emergency-contact-relation">Spouse</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Primary Phone</div>
+                            <div class="info-value">(555) 342-7893</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Work Phone</div>
+                            <div class="info-value">(555) 876-5432 ext. 204</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Relationship</div>
+                            <div class="info-value">Husband</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Notes</div>
+                            <div class="info-value">Works 7AM-4PM Monday-Friday. Has key to apartment.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="emergency-contact-item">
+                    <div class="emergency-contact-name">Sarah Johnson</div>
+                    <div class="emergency-contact-relation">Daughter</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Primary Phone</div>
+                            <div class="info-value">(555) 234-5678</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">892 Maple Drive<br>Springfield, IL 62704</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Relationship</div>
+                            <div class="info-value">Adult Daughter</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Notes</div>
+                            <div class="info-value">Lives 15 minutes away. Available during emergencies. Has key. Contact if spouse unavailable.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script>
+        function goBack() {
+            alert('Returning to search results...');
+        }
+    </script>
+</body>
+</html>
