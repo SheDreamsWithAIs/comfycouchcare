@@ -95,23 +95,25 @@ function medsHTML(meds) {
 
 // 3) Render one patient card
 function renderPatientCard(p) {
-  const fullName   = `${p.first_name} ${p.last_name}`;
+  // new fields from /api/patients/summary
+  const fullName   = p.display_name ?? "—";
+  const humanId    = p.patient_form_id ?? String(p.patient_id).slice(0, 8); // CCCP-### if set, else short UUID
   const dob        = fmtDateISOToMDY(p.dob);
   const nextVisit  = fmtNextVisit(p.next_visit);
   const careType   = p.care_type ?? "—";
   const dx         = p.primary_diagnosis ?? "—";
   const hasAllergy = (p.allergies ?? "").trim().length > 0;
 
-  const meds = normalizeMeds(p);              // <— normalize from API
-  const medsList = medsHTML(meds);            // <— build list HTML
+  const meds = normalizeMeds(p);   // already returns array
+  const medsList = medsHTML(meds); // same list builder
 
   return `
-  <section class="patient-card" data-patient-id="${p.id}" aria-expanded="false">
+  <section class="patient-card" data-patient-id="${p.patient_id}" aria-expanded="false">
     <div class="patient-header">
       <div>
         <div class="patient-name">${fullName}</div>
         <div class="quick">
-          <span>ID: ${String(p.id).padStart(4, "0")}</span>
+          <span>ID: ${humanId}</span>
           <span>${careType}</span>
           <span class="badge">Active</span>
         </div>
@@ -139,6 +141,7 @@ function renderPatientCard(p) {
     </div>
   </section>`;
 }
+
 
 
 
