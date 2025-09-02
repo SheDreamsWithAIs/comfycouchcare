@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Patient Detail • ComfyCouchCare</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .brand .logo {
+            width: 32px;
+            height: 32px;
+        }
+
+
+        .header--nurse {
+            background: linear-gradient(135deg, var(--brand) 0%, #6ea8fe 100%);
+            color: #fff;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+            padding: 1rem
+        }
+
+        .crumbs {
+            background: #fff;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+            padding: 1rem;
+            color: #7f8c8d
+        }
+
+        .patient-header-card {
+            background: #fff;
+            margin: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+            overflow: hidden
+        }
+
+        .patient-header-info {
+            background: #f8f9fa;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem
+        }
+
+        .patient-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50
+        }
+
+        .status-badge {
+            background: #27ae60;
+            color: #fff;
+            border-radius: 18px;
+            padding: .25rem .75rem;
+            font-weight: 600
+        }
+
+        .patient-header-actions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e9ecef;
+            background: #fff;
+            display: flex;
+            gap: .75rem;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: .65rem 1rem;
+            font-weight: 600;
+            min-height: 44px
+        }
+
+        .btn-primary {
+            background: var(--brand);
+            color: #fff
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: #fff
+        }
+
+        .info-sections {
+            margin: 1rem;
+            display: grid;
+            gap: 1rem
+        }
+
+        .info-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+            overflow: hidden
+        }
+
+        .info-card-header {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1.1rem;
+            font-weight: 700
+        }
+
+        .info-card-content {
+            padding: 1rem 1.5rem
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: .25rem
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #5a6c7d;
+            font-size: .9rem
+        }
+
+        .info-value {
+            color: #2c3e50
+        }
+
+        @media (max-width:768px) {
+            .patient-header-info {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- nurse header + nav -->
+    <div id="hdr"></div>
+    <div id="nav"></div>
+
+    <!-- crumbs -->
+    <div class="crumbs"><a href="patient-info-landing.html">Patient Info</a> › <span id="crumbName">Patient</span></div>
+
+    <!-- header card -->
+    <section class="patient-header-card">
+        <div class="patient-header-info">
+            <div>
+                <div class="patient-name" id="ptName">Loading…</div>
+                <div id="ptLine2" style="color:#7f8c8d;margin-top:.35rem">ID: — • DOB: — • <span id="ptCare">—</span>
+                </div>
+            </div>
+            <div class="status-badge">Active Patient</div>
+        </div>
+        <div class="patient-header-actions">
+            <button class="btn btn-primary" id="editBtn">Edit Information</button>
+            <button class="btn btn-success" id="startVisitBtn">Start Visit</button>
+        </div>
+    </section>
+
+    <!-- sections -->
+    <div class="info-sections">
+        <div class="info-card">
+            <div class="info-card-header">Contact Information</div>
+            <div class="info-card-content">
+                <div class="info-grid" id="contactGrid"></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-header">Address</div>
+            <div class="info-card-content">
+                <div class="info-grid" id="addressGrid"></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-header">Clinical Snapshot</div>
+            <div class="info-card-content">
+                <div class="info-grid" id="clinicalGrid"></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-header">Emergency Contacts</div>
+            <div class="info-card-content" id="emergencyList">Loading…</div>
+        </div>
+    </div>
+
+    <div id="ftr"></div>
+
+    <script src="js/partials.js"></script>
+    <script src="js/patient-detail.js"></script>
+</body>
+
+</html>

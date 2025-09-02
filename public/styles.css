@@ -29,7 +29,8 @@ header {
   padding: 1.5rem 1rem;
 }
 
-header .logo {
+header .logo,
+.header-top .logo{
   max-width: 80px;
   margin-bottom: 0.5rem;
 }
