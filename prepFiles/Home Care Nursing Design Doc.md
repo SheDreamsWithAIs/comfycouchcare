@@ -565,7 +565,11 @@ Keep it simple, auditable, and HIPAA-friendly.
 
 * `patients_index(patient_id PK UUID, display_name, date_joined)`
 
-* `patients_phi(patient_id PK/FK, legal_name, dob, sex, phone, email, address, insurance_plan_name, insurance_member_id_enc, ... )`
+* `patients_phi(patient_id PK/FK, legal_name, dob, sex, phone, email, address)` // update with all fields
+
+* // Update with insurance table and included fields
+
+
 
 ## **Emergency Contacts** 
 
