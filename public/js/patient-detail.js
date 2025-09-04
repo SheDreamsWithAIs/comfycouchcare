@@ -136,6 +136,30 @@ if (!Array.isArray(p.insurance) || p.insurance.length === 0) {
   insGrid.innerHTML = p.insurance.map(insuranceCardHTML).join("");
 }
 
+// Notes block — handle string | object | array-of-objects
+(function hydrateNotes(p) {
+  const el = document.getElementById("notesContent");
+  if (!el) return;
+
+  let txt = "No notes on file.";
+
+  if (p.notes) {
+    if (typeof p.notes === "string") {
+      txt = p.notes;
+    } else if (Array.isArray(p.notes) && p.notes.length) {
+      const first = p.notes[0];
+      txt =
+        typeof first === "string"
+          ? first
+          : (first.note_text || first.body || "");
+      txt = txt || "No notes on file.";
+    } else if (typeof p.notes === "object") {
+      txt = p.notes.note_text || p.notes.body || "No notes on file.";
+    }
+  }
+
+  el.textContent = txt;
+})(p);
 
   // actions
   document.getElementById("editBtn").addEventListener("click", () => alert("(Demo) Edit coming soon"));

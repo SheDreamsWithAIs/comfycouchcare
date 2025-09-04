@@ -352,3 +352,5 @@
     flex-direction: column;
   }
 }
+
+#notesContent { white-space: pre-wrap; }
