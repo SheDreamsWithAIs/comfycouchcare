@@ -108,7 +108,10 @@ function renderPatientCard(p) {
   const medsList = medsHTML(meds); // same list builder
 
   return `
-  <section class="patient-card" data-patient-id="${p.patient_id}" aria-expanded="false">
+  <section class="patient-card"
+           data-patient-id="${p.patient_id}"
+           data-patient-form-id="${p.patient_form_id || ""}"
+           aria-expanded="false">
     <div class="patient-header">
       <div>
         <div class="patient-name">${fullName}</div>
@@ -135,7 +138,7 @@ function renderPatientCard(p) {
         ${medsList}
       </div>
       <div style="display:flex;gap:.5rem;margin-top:1rem">
-      <button class="btn btn-primary" style="flex:1">Patient Details</button>
+      <button class="btn btn-primary" style="flex:1" data-action="details">Patient Details</button>
       <button class="btn" style="flex:1">View Chart</button>
       <button class="btn" style="flex:1">Care Plan</button>
       </div>
@@ -168,6 +171,7 @@ async function loadPatients() {
   container.querySelectorAll(".patient-card").forEach(card => {
     const header = card.querySelector(".patient-header");
     const startBtn = card.querySelector(".start");
+    const detailsBtn = card.querySelector('[data-action="details"]');
 
     header?.addEventListener("click", () => {
       const expanded = card.classList.toggle("expanded");
@@ -178,7 +182,15 @@ async function loadPatients() {
       e.stopPropagation(); // keeps chevron from toggling
       alert(`(Demo) Start visit for patient #${card.getAttribute("data-patient-id")}`);
     });
+
+    detailsBtn?.addEventListener("click", (e) => {
+      e.stopPropagation(); // keeps chevron from toggling
+      const formId = card.getAttribute("data-patient-form-id");
+      if (!formId) return alert("Missing patient form id.");
+      window.location.href = `patient-detail.html?id=${encodeURIComponent(formId)}`;
+    });
   });
+  
 }
 
 
