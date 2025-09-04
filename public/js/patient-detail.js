@@ -27,7 +27,7 @@ function fmtDateMaybe(iso) {
 }
 
 function insuranceCardHTML(p) {
-  const title = p.type === 'primary' ? 'Primary Insurance' : 'Secondary Insurance';
+  const title = p.insurance_pay_order === 'primary' ? 'Primary Insurance' : 'Secondary Insurance';
   return `
     <div class="info-card" style="margin:0 0 1rem 0;">
       <div class="info-card-header">${title}</div>
