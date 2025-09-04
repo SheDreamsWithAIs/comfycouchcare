@@ -33,7 +33,7 @@ function insuranceCardHTML(p) {
       <div class="info-card-header">${title}</div>
       <div class="info-card-content">
         <div class="info-grid">
-          <div class="info-item"><div class="info-label">Insurance Company</div><div class="info-value">${p.company || "—"}</div></div>
+          <div class="info-item"><div class="info-label">Insurance Company</div><div class="info-value">${p.insurance_company || "—"}</div></div>
           <div class="info-item"><div class="info-label">Policy Number</div><div class="info-value">${p.policy_number || "—"}</div></div>
           <div class="info-item"><div class="info-label">Group Number</div><div class="info-value">${p.group_number || "—"}</div></div>
           <div class="info-item"><div class="info-label">Policy Holder</div><div class="info-value">${p.policy_holder || "—"}</div></div>

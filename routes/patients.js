@@ -121,7 +121,11 @@ router.get("/by-form/:patientFormId/detail", async (req, res) => {
       [patientFormId]
     );
 
-    if (!rows.length) return res.status(404).json({ error: "Patient not found" });
+   
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Patient not found" });
+    }
     const patient = rows[0];
 
     // medication list
@@ -144,10 +148,10 @@ router.get("/by-form/:patientFormId/detail", async (req, res) => {
 
     // insurance policies
     const [policies] = await pool.query(
-      `SELECT policy_id, type, company, policy_number, group_number, policy_holder, effective_date
+      `SELECT policy_id, insurance_pay_order, insurance_company, policy_number, group_number, policy_holder, effective_date
          FROM insurance_policy
         WHERE patient_id = ?
-        ORDER BY FIELD(type,'primary','secondary'), effective_date DESC`,
+        ORDER BY FIELD(insurance_pay_order,'primary','secondary'), effective_date DESC`,
       [patient.patient_id]
     );
 
