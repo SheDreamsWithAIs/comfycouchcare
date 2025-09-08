@@ -49,7 +49,7 @@ function insuranceCardHTML(p) {
   await inject("hdr", "partials/nurse-header.html");
   const info = document.getElementById("nurseInfo");
   if (info) {
-    const tick = () => info.textContent = `Sarah Martinez, RN • ${new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`;
+    const tick = () => info.textContent = `Sarah Martinez, RN • ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
     tick(); setInterval(tick, 60_000);
   }
   inject("nav", "partials/nurse-nav.html");
@@ -69,7 +69,7 @@ function insuranceCardHTML(p) {
     return;
   }
   const p = await res.json();
-  console.log("detail:", p); 
+  console.log("detail:", p);
 
   // header
   document.getElementById("ptName").textContent = p.display_name || "—";
@@ -98,12 +98,27 @@ function insuranceCardHTML(p) {
     <div class="info-item"><div class="info-label">Next Scheduled Visit</div><div class="info-value">${p.next_visit ? new Date(p.next_visit).toLocaleString() : "—"}</div></div>
   `;
 
+  // Medications
+  const medGrid = document.getElementById("medicationGrid");
+  if (!Array.isArray(p.medications) || p.medications.length === 0) {
+    medGrid.innerHTML = `<div class="info-value">No current medications on file.</div>`;
+  } else {
+    medGrid.innerHTML = p.medications.map(m => {
+      const line = [m.dosage, m.frequency].filter(Boolean).join(" • ");
+      return `
+        <div class="info-item">
+          <div class="info-label">${m.name || "Medication"}</div>
+          <div class="info-value">${line || "—"}</div>
+        </div>`;
+    }).join("");
+  }
+
   // emergency contacts (grid version)
-const ecGrid = document.getElementById("emergencyContactGrid");
-if (!Array.isArray(p.emergency_contacts) || p.emergency_contacts.length === 0) {
-  ecGrid.innerHTML = `<div class="info-value">No emergency contacts on file.</div>`;
-} else {
-  ecGrid.innerHTML = p.emergency_contacts.map(c => `
+  const ecGrid = document.getElementById("emergencyContactGrid");
+  if (!Array.isArray(p.emergency_contacts) || p.emergency_contacts.length === 0) {
+    ecGrid.innerHTML = `<div class="info-value">No emergency contacts on file.</div>`;
+  } else {
+    ecGrid.innerHTML = p.emergency_contacts.map(c => `
     <div class="info-item" style="grid-column:1/-1">
       <div class="info-label" style="font-size:1rem">${c.contact_name || "—"} ${c.relationship ? `• ${c.relationship}` : ""}</div>
       <div class="info-grid">
@@ -116,50 +131,50 @@ if (!Array.isArray(p.emergency_contacts) || p.emergency_contacts.length === 0) {
       </div>
     </div>
   `).join("");
-}
+  }
 
-// Demographics
-document.getElementById("demographicsGrid").innerHTML = `
+  // Demographics
+  document.getElementById("demographicsGrid").innerHTML = `
   <div class="info-item"><div class="info-label">Date of Birth</div><div class="info-value">${fmtDate(p.dob)}</div></div>
   <div class="info-item"><div class="info-label">Age</div><div class="info-value">${calcAge(p.dob)}</div></div>
   <div class="info-item"><div class="info-label">Gender</div><div class="info-value">${p.gender || "—"}</div></div>
   <div class="info-item"><div class="info-label">Marital Status</div><div class="info-value">${p.marital_status || "—"}</div></div>
   <div class="info-item"><div class="info-label">Primary Language</div><div class="info-value">${p.primary_language || "—"}</div></div>
   <div class="info-item"><div class="info-label">Social Security</div><div class="info-value">${p.ssn_last4 ? `***-**-${p.ssn_last4}` : "—"}</div></div>
-`;
+  `;
 
-// Insurance and Billing
-const insGrid = document.getElementById("insuranceGrid");
-if (!Array.isArray(p.insurance) || p.insurance.length === 0) {
-  insGrid.innerHTML = `<div class="info-value">No insurance on file.</div>`;
-} else {
-  insGrid.innerHTML = p.insurance.map(insuranceCardHTML).join("");
-}
-
-// Notes block — handle string | object | array-of-objects
-(function hydrateNotes(p) {
-  const el = document.getElementById("notesContent");
-  if (!el) return;
-
-  let txt = "No notes on file.";
-
-  if (p.notes) {
-    if (typeof p.notes === "string") {
-      txt = p.notes;
-    } else if (Array.isArray(p.notes) && p.notes.length) {
-      const first = p.notes[0];
-      txt =
-        typeof first === "string"
-          ? first
-          : (first.note_text || first.body || "");
-      txt = txt || "No notes on file.";
-    } else if (typeof p.notes === "object") {
-      txt = p.notes.note_text || p.notes.body || "No notes on file.";
-    }
+  // Insurance and Billing
+  const insGrid = document.getElementById("insuranceGrid");
+  if (!Array.isArray(p.insurance) || p.insurance.length === 0) {
+    insGrid.innerHTML = `<div class="info-value">No insurance on file.</div>`;
+  } else {
+    insGrid.innerHTML = p.insurance.map(insuranceCardHTML).join("");
   }
 
-  el.textContent = txt;
-})(p);
+  // Notes block — handle string | object | array-of-objects
+  (function hydrateNotes(p) {
+    const el = document.getElementById("notesContent");
+    if (!el) return;
+
+    let txt = "No notes on file.";
+
+    if (p.notes) {
+      if (typeof p.notes === "string") {
+        txt = p.notes;
+      } else if (Array.isArray(p.notes) && p.notes.length) {
+        const first = p.notes[0];
+        txt =
+          typeof first === "string"
+            ? first
+            : (first.note_text || first.body || "");
+        txt = txt || "No notes on file.";
+      } else if (typeof p.notes === "object") {
+        txt = p.notes.note_text || p.notes.body || "No notes on file.";
+      }
+    }
+
+    el.textContent = txt;
+  })(p);
 
   // actions
   document.getElementById("editBtn").addEventListener("click", () => alert("(Demo) Edit coming soon"));

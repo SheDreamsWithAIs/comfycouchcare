@@ -353,4 +353,27 @@
   }
 }
 
+/* --- Medications styling --- */
+#medicationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+#medicationGrid .info-item {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+#medicationGrid .info-label {
+  font-weight: 600;
+  color: #5a6c7d;
+  font-size: .9rem;
+}
+
+#medicationGrid .info-value {
+  color: #2c3e50;
+}
+
 #notesContent { white-space: pre-wrap; }
