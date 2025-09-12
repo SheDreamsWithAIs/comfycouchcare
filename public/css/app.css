@@ -12,6 +12,13 @@
   height: 32px;
 }
 
+.brand-link {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  gap: 5px;
+}
+
 /* --- header (nurse) --- */
 .header--nurse {
   background: linear-gradient(135deg, var(--brand) 0%, #6ea8fe 100%);
