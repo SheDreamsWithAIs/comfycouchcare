@@ -140,7 +140,7 @@ function insuranceCardHTML(p) {
   <div class="info-item"><div class="info-label">Gender</div><div class="info-value">${p.gender || "—"}</div></div>
   <div class="info-item"><div class="info-label">Marital Status</div><div class="info-value">${p.marital_status || "—"}</div></div>
   <div class="info-item"><div class="info-label">Primary Language</div><div class="info-value">${p.primary_language || "—"}</div></div>
-  <div class="info-item"><div class="info-label">Social Security</div><div class="info-value">${p.ssn_last4 ? `***-**-${p.ssn_last4}` : "—"}</div></div>
+  <div class="info-item"><div class="info-label">Social Security</div><div class="info-value">${p.ssn_enc || "—"}</div></div>
   `;
 
   // Insurance and Billing
