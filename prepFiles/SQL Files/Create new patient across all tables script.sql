@@ -1,5 +1,5 @@
 -- =========================================================
--- COMFYCARE • Create a full patient record (one run = 1 pt)
+-- COMFYCARE • Create a full patient record (one run = 1 patient)
 -- =========================================================
 
 START TRANSACTION;
@@ -71,9 +71,9 @@ SET @ec_work_phone     = NULL;
 SET @ec_mobile_phone   = '555-6666';
 SET @ec_email          = 'sarah.smith@example.com';
 SET @ec_address        = '789 Pine Rd, Springfield';
-SET @ec_is_primary     = TRUE;							-- Are they the primary emergency contact
-SET @ec_has_key        = FALSE;							-- Do they have a key
-SET @ec_avail_notes    = 'Available most afternoons';	-- Availablity notes
+SET @ec_is_primary     = TRUE;							-- Are they the primary emergency contact?
+SET @ec_has_key        = FALSE;							-- Do they have a key?
+SET @ec_avail_notes    = 'Available most afternoons';	-- Availability notes
 SET @ec_emerg_notes    = 'Lives 10 minutes away';		-- Emergency contact notes
 
 -- ---------- 2) System variables (do not edit) ----------
