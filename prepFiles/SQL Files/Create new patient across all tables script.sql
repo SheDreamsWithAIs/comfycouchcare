@@ -5,31 +5,31 @@
 START TRANSACTION;
 
 -- ---------- 1) EDIT THESE: patient basics ----------
-SET @form_id           = 'CCCP-3';
-SET @display_name      = 'Alice Jones';
-SET @legal_name        = 'Alice Jones';
-SET @date_joined       = '2023-07-26';
+SET @form_id           = 'CCCP-5';
+SET @display_name      = 'Babs Green';
+SET @legal_name        = 'Barbara Green';
+SET @date_joined       = '2010-12-26';  		-- YYYY-MM-DD
 
 -- Demographics / PHI
-SET @dob               = '1950-03-15';          -- Date of birth
+SET @dob               = '1942-05-15';          -- Date of birth YYYY-MM-DD
 SET @gender            = 'Female';              -- must match ENUM: ('Female', 'Male', 'Nonbinary', 'Other')
 SET @marital_status    = 'Married';             -- must match ENUM: ('Single', 'Married', 'Divorced', 'Widowed', 'Other')
 SET @primary_language  = 'English';
-SET @ssn_enc           = '***-**-1235';         -- simulates a partially hidden social security number
+SET @ssn_enc           = '***-**-1535';         -- simulates a partially hidden social security number
 
 -- Contact
-SET @phone             = '555-555-9011';
-SET @email             = 'Alice.Jones@example.com';
-SET @preferred_contact = 'Mobile Phone';        -- must match ENUM: ('Home phone','email','Mobile Phone')
+SET @phone             = '555-555-1211';
+SET @email             = 'Babs@example.com';
+SET @preferred_contact = 'Home phone';        -- must match ENUM: ('Home phone','email','Mobile Phone')
 
 -- Address
-SET @address           = '789 Birch Rd';
-SET @addr_instr        = 'Gate code #2271. Small dog at home.';
+SET @address           = '123 Main St';
+SET @addr_instr        = 'Patient needs additional time to make it to the door';
 
 -- Clinical snapshot
 SET @care_type         = 'Infusion';             -- Represents the kind of cared recieved from Comfy Care
-SET @primary_dx        = 'Rheumatoid arthritis'; -- Primary diagnosis
-SET @allergies         = 'Penicillin; Sulfa';
+SET @primary_dx        = 'Iron Deficiency Anemia'; -- Primary diagnosis
+SET @allergies         = 'None';
 
 -- Visit (demo future appt)
 SET @nurse_id          = 3;
